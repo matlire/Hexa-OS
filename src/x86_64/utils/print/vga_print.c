@@ -1,18 +1,5 @@
 #include "vga_print.h"
 
-const static size_t NUM_COLS = 80;
-const static size_t NUM_ROWS = 25;
-
-struct Char {
-    uint8_t character;
-    uint8_t color;
-};
-
-struct Char* buffer = (struct Char*) 0xB8000;
-size_t col = 0;
-size_t row = 0;
-uint8_t color = COLOR_WHITE | (COLOR_BLACK << 4);
-
 void clear_row(size_t row) {
     struct Char empty = (struct Char) 
     {

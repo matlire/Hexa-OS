@@ -1,14 +1,14 @@
 # Hexa OS
 
 
-Hexa OS - is a from-scretch project, which main goal is to create an os capable of running both - linux and windows executables.
+Hexa OS - is a from-scratch project, which main goal is to create an os capable of running both - linux and windows executables.
 
 
 To build:
 
     ./build.sh
 
-    -i Intalls and updates all dependencies
+    -i      Intalls and updates all dependencies
 
 To test iso in vm:
 
