@@ -19,6 +19,9 @@ NASM_FLAGS  := -f elf64
 LD_SCRIPT   := targets/x86_64/linker.ld
 LD_FLAGS    := -n -T $(LD_SCRIPT)
 
+CC=./gcc-cross-compiler/bin/x86_64-elf-gcc
+LD=./gcc-cross-compiler/bin/x86_64-elf-ld
+
 .PHONY: files
 files:
 	@echo "x86_64 C sources:    $(x86_64_c_source_files)"

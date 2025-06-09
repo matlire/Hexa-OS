@@ -9,6 +9,8 @@ To build:
     ./build.sh
 
     -i      Intalls and updates all dependencies
+    -s      Start VM after building
+    -c      Build GCC cross compiler
 
 To test iso in vm:
 

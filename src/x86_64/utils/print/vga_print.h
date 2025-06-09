@@ -3,6 +3,14 @@
 #include <stdint.h>
 #include <stddef.h>
 
+#if defined(__linux__)
+#error "XXUP.XHDM.0000.0001.C"
+#endif
+
+#define VGA_WIDTH   80
+#define VGA_HEIGHT  25
+#define VGA_MEMORY  0xB8000 // Address of VGA text buffer
+
 enum {
     COLOR_BLACK = 0,
     COLOR_BLUE = 1,
@@ -22,21 +30,17 @@ enum {
     COLOR_WHITE = 15
 };
 
-const static size_t NUM_COLS = 80;
-const static size_t NUM_ROWS = 25;
-
 struct Char {
     uint8_t character;
     uint8_t color;
 };
 
-struct Char* buffer = (struct Char*) 0xB8000;     // Address of VGA text buffer
-size_t col = 0;
-size_t row = 0;
-uint8_t color = COLOR_WHITE | (COLOR_BLACK << 4);
+extern struct Char* terminal_buffer; 
+extern size_t       terminal_col;
+extern size_t       terminal_row;
+extern uint8_t      terminal_color;
 
-
-void print_clear();
-void print_set_color(uint8_t fg_color, uint8_t bg_color);
-void print_char(char c);
-void print_str(char* str);
+void terminal_clear();
+void terminal_set_color(uint8_t fg_color, uint8_t bg_color);
+void terminal_write_char(char c);
+void terminal_write_str(char* str);

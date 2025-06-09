@@ -3,3 +3,7 @@ dist/x86_64/*
 build/*
 .vscode
 targets/x86_64/iso/boot/kernel.bin
+build-gcc/*
+build-binutils/*
+build-gcc-stage/*
+gcc-cross-compiler/*
