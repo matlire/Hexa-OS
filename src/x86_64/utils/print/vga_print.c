@@ -1,9 +1,9 @@
 #include "vga_print.h"
 
 struct Char* buffer = (struct Char*) 0xB8000;
-size_t col = 0;
-size_t row = 0;
-uint8_t color = COLOR_WHITE | (COLOR_BLACK << 4);
+size_t col          = 0;
+size_t row          = 0;
+uint8_t color       = COLOR_WHITE | (COLOR_BLACK << 4);
 
 void terminal_clear_row(size_t row) {
     struct Char empty = (struct Char) 

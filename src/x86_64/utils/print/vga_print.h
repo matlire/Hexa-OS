@@ -35,7 +35,8 @@ struct Char {
     uint8_t color;
 };
 
-extern struct Char* terminal_buffer; 
+extern struct Char* terminal_buffer;
+
 extern size_t       terminal_col;
 extern size_t       terminal_row;
 extern uint8_t      terminal_color;
