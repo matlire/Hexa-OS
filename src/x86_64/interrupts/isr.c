@@ -76,7 +76,7 @@ void interrupt_handler (registers_t *registers)
     {
         terminal_write_str("Got isr interrupt (");
         char buffer[12];
-        int_to_ascii(vec, buffer);
+        int2ascii(vec, buffer);
         terminal_write_str(buffer);
         terminal_write_str("): ");
         terminal_write_str(exception_messages[vec]);

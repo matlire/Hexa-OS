@@ -16,7 +16,10 @@ GCC_FLAGS   := -ffreestanding -fno-stack-protector -fno-builtin -O2 -mno-red-zon
                -I src/x86_64/interrupts \
                -I src/x86_64/drivers/ports \
                -I src/x86_64/drivers/ps2 \
-               -I src/x86_64/PIC
+               -I src/x86_64/PIC \
+               -I src/x86_64/stdlib \
+               -I src/x86_64/shell/commands \
+               -I src/x86_64/shell
 
 NASM_FLAGS  := -f elf64
 

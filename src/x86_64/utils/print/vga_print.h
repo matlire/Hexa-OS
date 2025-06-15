@@ -2,8 +2,8 @@
 #error "XXUP.XHDM.0000.0001.C"
 #endif
 
-#ifndef VGA_PRINT
-#define VGA_PRINT
+#ifndef VGA_PRINT_H
+#define VGA_PRINT_H
 
 #include <stdint.h>
 #include <stddef.h>
@@ -48,20 +48,22 @@ typedef struct {
     uint8_t color;
 } Char;
 
-extern Char* terminal_buffer;
+extern Char*   terminal_buffer;
+extern size_t  terminal_col;
+extern size_t  terminal_row;
+extern uint8_t terminal_color;
 
-extern size_t       terminal_col;
-extern size_t       terminal_row;
-extern uint8_t      terminal_color;
+#define EMPTY_CHAR_CHAR ' '
+static inline Char empty_char(void)
+{
+    return (Char){ .character = EMPTY_CHAR_CHAR, .color = terminal_color };
+}
 
 void terminal_update_cursor   (void);
 
-void terminal_clear_last_char (void);
 void terminal_clear           (void);
 void terminal_set_color       (uint8_t fg_color, uint8_t bg_color);
 void terminal_write_char      (char c);
 void terminal_write_str       (char* str);
-
-void int_to_ascii (int value, char *buffer);
 
 #endif

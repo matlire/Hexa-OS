@@ -5,6 +5,7 @@
 #include "ports.h"
 #include "vga_print.h"
 #include "pic.h"
+#include "strings.h"
 
 extern void handle_input(uint8_t keycode);
 
@@ -87,7 +88,6 @@ typedef struct
    	uint64_t eip, cs, eflags, useresp, ss;
 } __attribute__((packed)) registers_t;
 
-void PIC_remap   (int offset1, int offset2);
 void isr_install (void);
 
 void interrupt_handler (registers_t *registers);
