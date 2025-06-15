@@ -136,3 +136,4 @@ gdt64:
 .pointer:
     dw $ - gdt64 - 1 ; Limit = size(GDT) − 1
     dq gdt64         ; Base address of GDT
+.gdt64_end:

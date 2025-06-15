@@ -1,15 +1,28 @@
-#pragma once
-
-#include <stdint.h>
-#include <stddef.h>
-
 #if defined(__linux__)
 #error "XXUP.XHDM.0000.0001.C"
 #endif
 
+#ifndef VGA_PRINT
+#define VGA_PRINT
+
+#include <stdint.h>
+#include <stddef.h>
+
+#include "ports.h"
+
+#define VGA_CRTC_INDEX   0x3D4
+#define VGA_CRTC_DATA    0x3D5
+
+#define CURSOR_LOCATION_HIGH  0x0E
+#define CURSOR_LOCATION_LOW   0x0F
+#define CURSOR_START_REG      0x0A
+#define CURSOR_END_REG        0x0B
+
 #define VGA_WIDTH   80
 #define VGA_HEIGHT  25
 #define VGA_MEMORY  0xB8000 // Address of VGA text buffer
+
+extern bool input_allowed;
 
 enum {
     COLOR_BLACK = 0,
@@ -30,18 +43,25 @@ enum {
     COLOR_WHITE = 15
 };
 
-struct Char {
+typedef struct {
     uint8_t character;
     uint8_t color;
-};
+} Char;
 
-extern struct Char* terminal_buffer;
+extern Char* terminal_buffer;
 
 extern size_t       terminal_col;
 extern size_t       terminal_row;
 extern uint8_t      terminal_color;
 
-void terminal_clear();
-void terminal_set_color(uint8_t fg_color, uint8_t bg_color);
-void terminal_write_char(char c);
-void terminal_write_str(char* str);
+void terminal_update_cursor   (void);
+
+void terminal_clear_last_char (void);
+void terminal_clear           (void);
+void terminal_set_color       (uint8_t fg_color, uint8_t bg_color);
+void terminal_write_char      (char c);
+void terminal_write_str       (char* str);
+
+void int_to_ascii (int value, char *buffer);
+
+#endif
