@@ -18,7 +18,8 @@ void isr_install (void) {
     for (int i = 0; i < 32; i++) {
         idt_set_gate((uint8_t)i, (void*)isr_routines[i], ISR_FLAGS);
     }
-
+    
+    PIC_enable();
     PIC_remap(IRQ0, IRQ0 + 8);
     IRQ_clear_mask(1);
 

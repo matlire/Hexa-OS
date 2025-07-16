@@ -1,11 +1,14 @@
 #ifndef STRINGS_H
 #define STRINGS_H
 
-unsigned int strlen  (char *str);
-void reverse (char *str);
-bool strcmp  (char *str1, char *str2);
+#include <stdint.h>
 
-void int2ascii (int n, char *str);
-void hex2ascii (int n, char *str);
+uint16_t strlen  (const char *str);
+void reverse 	 (char *str);
+short int strcmp (const char *str1, const char *str2);
+uint16_t count   (const char *str, const char chr);
+
+void int2ascii (const int n, char *str);
+void hex2ascii (const int n, char *str);
 
 #endif

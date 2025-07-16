@@ -11,6 +11,7 @@ _start:
     call check_multiboot
     call check_cpuid
     call check_long_mode
+    call check_pae
 
     call setup_page_tables
     call enable_paging
@@ -59,6 +60,17 @@ check_long_mode:
     ret
 .no_long_mode:
     mov al, "L"
+    jmp error
+
+; Here we check that Physical Address Extension works (for 64 bit paging)
+check_pae:
+    mov eax, 1
+    cpuid
+    test edx, 1 << 6
+    jz .no_pae
+    ret
+.no_pae:
+    mov al, "P"
     jmp error
 
 setup_page_tables:

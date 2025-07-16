@@ -1,6 +1,6 @@
 #include "strings.h"
 
-unsigned int strlen (char *str)
+uint16_t strlen (const char *str)
 {
 	unsigned int len = 0;
 	while (str[len] != '\0') { len++; }
@@ -24,19 +24,33 @@ void reverse (char *str)
 	}
 }
 
-bool strcmp (char *str1, char *str2)
+short int strcmp (const char *str1, const char *str2)
 {
-    while (*str1 && *str2) {
-        if (*str1 != *str2) return 0;
+	while (*str1 && (*str1 == *str2)) {
         str1++;
         str2++;
     }
-
-    return (*str1 == '\0' && *str2 == '\0');
+    return *(const unsigned char *)str1 - *(const unsigned char *)str2;
 }
 
-void int2ascii (int n, char *str)
+uint16_t count (const char *str, const char chr)
 {
+	uint16_t res = 0;
+	while (*str)
+	{
+		if (*str == chr)
+		{
+			res++;
+		}
+		str++;
+	}
+
+	return res;
+}
+
+void int2ascii (const int n, char *str)
+{
+	int ln = n;
 	if (n == 0)
 	{
 		str[0] = '0';
@@ -45,17 +59,17 @@ void int2ascii (int n, char *str)
 	}
 
 	bool is_neg = 0;
-	if (n < 0)
+	if (ln < 0)
 	{
 		is_neg = 1;
-		n = -n;
+		ln = -ln;
 	}
 
 	unsigned int i = 0;
-	while (n > 0)
+	while (ln > 0)
 	{
-		str[i++] = '0' + (n % 10);
-		n /= 10;
+		str[i++] = '0' + (ln % 10);
+		ln /= 10;
 	}
 
 	if (is_neg)
@@ -68,11 +82,12 @@ void int2ascii (int n, char *str)
 	return;
 }
 
-void hex2ascii(int n, char *str) {
+void hex2ascii(const int n, char *str) {
     const char *hex_chars = "0123456789ABCDEF";
     int i = 0;
+    int ln = 0;
 
-    if (n == 0) {
+    if (ln == 0) {
         str[i++] = '0';
         str[i++] = 'x';
         str[i++] = '0';
@@ -81,9 +96,9 @@ void hex2ascii(int n, char *str) {
         return;
     }
 
-    while (n != 0) {
-        str[i++] = hex_chars[n % 16];
-        n /= 16;
+    while (ln != 0) {
+        str[i++] = hex_chars[ln % 16];
+        ln /= 16;
     }
 
     str[i++] = 'x';

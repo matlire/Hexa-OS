@@ -23,6 +23,8 @@
 #define VGA_MEMORY  0xB8000 // Address of VGA text buffer
 
 extern bool input_allowed;
+extern size_t input_start_col;
+extern size_t input_start_row;
 
 enum {
     COLOR_BLACK = 0,
@@ -52,6 +54,7 @@ extern Char*   terminal_buffer;
 extern size_t  terminal_col;
 extern size_t  terminal_row;
 extern uint8_t terminal_color;
+extern size_t  last_data_row;
 
 #define EMPTY_CHAR_CHAR ' '
 static inline Char empty_char(void)
@@ -59,8 +62,11 @@ static inline Char empty_char(void)
     return (Char){ .character = EMPTY_CHAR_CHAR, .color = terminal_color };
 }
 
-void terminal_update_cursor   (void);
+void terminal_update_cursor_pos  (void);
+void terminal_scroll_up          (void);
+void terminal_update_cursor_type (bool insertm);
 
+void terminal_clear_row       (size_t row);
 void terminal_clear           (void);
 void terminal_set_color       (uint8_t fg_color, uint8_t bg_color);
 void terminal_write_char      (char c);

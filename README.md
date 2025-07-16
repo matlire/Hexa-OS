@@ -1,7 +1,7 @@
 # Hexa OS
 
 
-Hexa OS - is a from-scratch project, which main goal is to create an os capable of running both - linux and windows executables.
+Hexa OS - is a from-scratch project of os.
 
 
 To build:
