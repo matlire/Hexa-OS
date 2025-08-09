@@ -1,5 +1,13 @@
 # Website
 
+## OUTDATED!!!
+
+Actually docs should be written and updated, but maybe later;)
+
+P.s. read TODO, there is todo task to write docs
+
+
+
 This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
 
 ## Installation
