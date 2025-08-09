@@ -3,23 +3,49 @@
 
 #include <stdint.h>
 
-#define NPRT_SIZE  64
-#define CTRL_SIZE  32
-#define ASCII_SIZE 128
-#define EXT_SIZE   16
-#define KEYS_SIZE  128
+#define KEYS_SIZE 128
+#define EXT_SIZE  128
+#define CTRL_SIZE 32
+#define NPRT_SIZE 64
 
-extern const char *not_printable[NPRT_SIZE];
+typedef struct {
+    const char* name;
+    char normal;
+    char shifted;
+    char caps;
+    char shifted_caps;
+} Key_Map_Entry;
+
+extern const Key_Map_Entry keymap[KEYS_SIZE];
+
+typedef struct {
+    const char* name;
+    char normal;
+    char numlock;
+} Ext_Key_Map_Entry;
+
+extern const Ext_Key_Map_Entry ext_keymap[EXT_SIZE];
+
+extern const char* not_printable[NPRT_SIZE];
 extern const char  ctrl_break[CTRL_SIZE];
 
-extern const char *ascii_names[ASCII_SIZE];
-extern const char  ascii_normal[ASCII_SIZE];
-extern const char  ascii_shifted[ASCII_SIZE];
-extern const char  ascii_caps[ASCII_SIZE];
-extern const char  ascii_shifted_caps[ASCII_SIZE];
-
-extern const char *ext_names[EXT_SIZE];
-extern const char  ext_normal[EXT_SIZE];
-extern const char  ext_numed[EXT_SIZE];
+typedef enum {
+    KEY_NUMLOCK     = 0x45,
+    KEY_ENTER       = 0x1C,
+    KEY_BACKSPACE   = 0x0E,
+    KEY_CAPSLOCK    = 0x3A,
+    KEY_LSHIFT      = 0x2A,
+    KEY_RSHIFT      = 0x36,
+    KEY_LCTRL       = 0x1D,
+    KEY_RCTRL       = 0x1D,
+    KEY_KP0         = 0x52,
+    KEY_ARROW_LEFT  = 0x4B,
+    KEY_ARROW_RIGHT = 0x4D,
+    KEY_ARROW_UP    = 0x48,
+    KEY_ARROW_DOWN  = 0x50,
+    KEY_DELETE      = 0x53,
+    KEY_KP7         = 0x47,
+    KEY_KP1         = 0x4F,
+} Major_Codes;
 
 #endif

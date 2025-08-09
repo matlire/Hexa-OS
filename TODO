@@ -1,69 +1,20 @@
 Input: ""; Action: ""; Output/Error: ""; Comment: ""
 Bugs:
+1) Input: "hello world!"; Action: "ctrl+delete when cursor is after ' ' and before 'w'"; Output/Error: "hello !"; Comment: "if trying to input something, it replaces '!'"
+2) Fix home/end buttons to jump to start/end of line, not full input
+
+Add comments, do docs!
 
 Major tasks:
-1) Refactor code (I don't fucking understand wtf is hapenning in code)
-2) Parse commands
-3) Built in timer/clock (irq)
+1) Parse commands
+2) Timer & clock
+3) memory management (malloc, free, etc)
+...
 
 Minor tasks:
 1) full kb support:
 	- numpad
-	- f buttons
-2) docs (fuck no)
+	- F1-F12 buttons
+2) docs
 
 Refactor:
-1) typedef enum {
-    KEY_ENTER = 28,
-    KEY_BACKSPACE = 14,
-    KEY_LEFT = 75,
-    KEY_RIGHT = 77,
-    // etc.
-} KeyCode;
-
-if (keycode == KEY_ENTER) {
-    // handle Enter
-}
-
-
-2) #define ICW1_INIT 0x10
-#define ICW1_ICW4 0x01
-#define ICW4_8086 0x01
-
-3) #define INPUT_BUFFER_SIZE 256
-char input_buffer[INPUT_BUFFER_SIZE];
-int input_ptr = 0;
-
-if (input_ptr < INPUT_BUFFER_SIZE - 1) {
-    input_buffer[input_ptr++] = ch;
-    input_buffer[input_ptr] = '\0'; // maintain null-termination
-}
-
-4) typedef struct {
-    char normal;
-    char shifted;
-    char caps;
-} KeyMapEntry;
-
-KeyMapEntry keymap[KEYS_SIZE];
-
-char ch = keymap[scancode].normal;
-if (shifted) ch = keymap[scancode].shifted;
-if (caps && isalpha(ch)) ch = toggle_case(ch);
-
-
-5) ✅ Refactor:
-keyboard.c handles scancode and key states
-
-input.c handles line buffering
-
-shell.c handles command parsing and execution
-
-6) /**
- * Initialize the IDT and load ISRs
- */
-void isr_install();
-
-7) global flags, var name index, etc - renaming
-
-8) one style - tabs, spaces, etc

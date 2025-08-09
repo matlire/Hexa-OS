@@ -90,7 +90,7 @@ void interrupt_handler (registers_t *registers)
 
         if (irq == 1) {
             uint8_t sc = inb(0x60);
-            handle_input(sc);
+            queue_input(sc);
         }
 
         PIC_sendEOI(irq);

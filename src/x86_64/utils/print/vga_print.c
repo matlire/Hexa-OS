@@ -1,15 +1,43 @@
 #include "vga_print.h"
 
-Char*   terminal_buffer      = (Char*) 0xB8000;
-size_t  terminal_col         = 0;
-size_t  terminal_row         = 0;
-uint8_t terminal_color       = COLOR_WHITE | (COLOR_BLACK << 4);
+static Terminal g_terminal;
 
-size_t  last_data_row        = 0;
+void init_terminal (void)
+{
+    g_terminal.buffer   = (Char*) 0xB8000;
+    g_terminal.column   = 0;
+    g_terminal.row      = 0;
+    g_terminal.color    = COLOR_WHITE | (COLOR_BLACK << 4);
+    g_terminal.last_row = 0;
+}
+
+Terminal* terminal_get_state(void) {
+    return &g_terminal;
+}
+
+void terminal_update_row (size_t row)
+{
+    g_terminal.row = row;
+}
+
+void terminal_update_column (size_t column)
+{
+    g_terminal.column = column;
+}
+
+void terminal_update_last_row (size_t last_row)
+{
+    g_terminal.last_row = last_row;
+}
+
+Char empty_char(void)
+{
+    return (Char){ .character = EMPTY_CHAR_CHAR, .color = g_terminal.color };
+}
 
 void terminal_update_cursor_pos (void)
 {
-    uint16_t pos = (uint16_t)(terminal_row * VGA_WIDTH + terminal_col);
+    uint16_t pos = (uint16_t)(g_terminal.row * VGA_WIDTH + g_terminal.column);
 
     outb(VGA_CRTC_INDEX, CURSOR_LOCATION_LOW);
     io_wait();
@@ -41,7 +69,7 @@ void terminal_update_cursor_type (bool insertm)
 void terminal_clear_row(size_t row)
 {
     for (size_t i = 0; i < VGA_WIDTH; i++) {
-        terminal_buffer[terminal_row * VGA_WIDTH + i] = empty_char();
+        g_terminal.buffer[g_terminal.row * VGA_WIDTH + i] = empty_char();
     }
 }
 
@@ -50,43 +78,43 @@ void terminal_clear(void)
     for (size_t i = 0; i < VGA_HEIGHT; i++) {
         terminal_clear_row(i);
     }
-    terminal_col = 0;
-    terminal_row = 0;
-    last_data_row = 0;
+    g_terminal.column   = 0;
+    g_terminal.row      = 0;
+    g_terminal.last_row = 0;
     terminal_update_cursor_pos();
 }
 
 void terminal_set_color(uint8_t fg_color, uint8_t bg_color)
 {
-    terminal_color = fg_color | (bg_color << 4);
+    g_terminal.color = fg_color | (bg_color << 4);
 }
 
 void terminal_scroll_up(void)
 {
     for (size_t row = 1; row < VGA_HEIGHT; row++) {
         for (size_t col = 0; col < VGA_WIDTH; col++) {
-            terminal_buffer[(row - 1) * VGA_WIDTH + col] = terminal_buffer[row * VGA_WIDTH + col];
+            g_terminal.buffer[(row - 1) * VGA_WIDTH + col] = g_terminal.buffer[row * VGA_WIDTH + col];
         }
     }
 
     for (size_t col = 0; col < VGA_WIDTH; col++) {
-        terminal_buffer[(VGA_HEIGHT - 1) * VGA_WIDTH + col] = empty_char();
+        g_terminal.buffer[(VGA_HEIGHT - 1) * VGA_WIDTH + col] = empty_char();
     }
 
-    if (terminal_row > 0)    { terminal_row--; }
-    if (input_start_row > 0) { input_start_row--; }
+    if (g_terminal.row > 0)    { g_terminal.row--; }
+    if (shell_get_state()->input_start_row > 0) { shell_update_input_start_row(shell_get_state()->input_start_row - 1);; }
 }
 
 void terminal_write_new_line()
 {
-    terminal_col = 0;
-    terminal_row++;
-    if (terminal_row >= VGA_HEIGHT) {
+    g_terminal.column  = 0;
+    g_terminal.row    += 1;
+    if (g_terminal.row >= VGA_HEIGHT) {
         terminal_scroll_up();
-        terminal_row = VGA_HEIGHT - 1;
-        last_data_row--;
+        g_terminal.row = VGA_HEIGHT - 1;
+        g_terminal.last_row -= 1;
     }
-    last_data_row++;
+    g_terminal.last_row += 1;
 }
 
 void terminal_write_char(char c)
@@ -101,12 +129,12 @@ void terminal_write_char(char c)
         Char curr_char = (Char) 
         {
             character: c,
-            color: terminal_color
+            color: g_terminal.color
         };
 
-        terminal_buffer[terminal_row * VGA_WIDTH + terminal_col] = curr_char;
-        terminal_col++;
-        if (terminal_col >= VGA_WIDTH) {
+        g_terminal.buffer[g_terminal.row * VGA_WIDTH + g_terminal.column] = curr_char;
+        g_terminal.column += 1;
+        if (g_terminal.column >= VGA_WIDTH) {
             terminal_write_new_line();
         }
     }

@@ -5,7 +5,7 @@ void PIC_enable (void)
 	outb(PIC1,		ICW_DEF_INIT);
     outb(PIC2, 		ICW_DEF_INIT);
     outb(PIC1_DATA, PIC_EOI);
-    outb(PIC2_DATA, 0x28);           // PIC slave offset
+    outb(PIC2_DATA, PIC_SLAVE_OFFSET);
     outb(PIC1_DATA, ICW1_INTERVAL4);
     outb(PIC2_DATA, ICW1_SINGLE);
     outb(PIC1_DATA, ICW1_ICW4);

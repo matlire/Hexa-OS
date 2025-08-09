@@ -11,6 +11,7 @@ all_object_files         := \
 GCC_FLAGS   := -ffreestanding -fno-stack-protector -fno-builtin -O2 -mno-red-zone -mno-sse -mno-mmx -m64 -Wall -Wextra \
                -I src/x86_64        \
                -I src/x86_64/utils  \
+               -I src/x86_64/ds  \
 			   -I src/x86_64/utils/print  \
 			   -I src/x86_64/utils/keyboard  \
                -I src/x86_64/kernel \

@@ -9,24 +9,25 @@
 #include <stddef.h>
 
 #include "ports.h"
+#include "shell.h"
 
-#define VGA_CRTC_INDEX   0x3D4
-#define VGA_CRTC_DATA    0x3D5
+typedef enum {
+    VGA_CRTC_INDEX = 0x3D4,
+    VGA_CRTC_DATA  = 0x3D5,
 
-#define CURSOR_LOCATION_HIGH  0x0E
-#define CURSOR_LOCATION_LOW   0x0F
-#define CURSOR_START_REG      0x0A
-#define CURSOR_END_REG        0x0B
+    CURSOR_LOCATION_HIGH = 0x0E,
+    CURSOR_LOCATION_LOW  = 0x0F,
+    CURSOR_START_REG     = 0x0A,
+    CURSOR_END_REG       = 0x0B,
+} VGA_Driver_Consts;
 
-#define VGA_WIDTH   80
-#define VGA_HEIGHT  25
-#define VGA_MEMORY  0xB8000 // Address of VGA text buffer
+typedef enum {
+    VGA_WIDTH  = 80,
+    VGA_HEIGHT = 25,
+    VGA_MEMORY = 0xB8000, // Address of VGA text buffer
+} VGA_Props;
 
-extern bool input_allowed;
-extern size_t input_start_col;
-extern size_t input_start_row;
-
-enum {
+typedef enum {
     COLOR_BLACK = 0,
     COLOR_BLUE = 1,
     COLOR_GREEN = 2,
@@ -43,24 +44,31 @@ enum {
     COLOR_LIGHT_MAGENTA = 13,
     COLOR_YELLOW = 14,
     COLOR_WHITE = 15
-};
+} Colors;
 
 typedef struct {
     uint8_t character;
     uint8_t color;
 } Char;
 
-extern Char*   terminal_buffer;
-extern size_t  terminal_col;
-extern size_t  terminal_row;
-extern uint8_t terminal_color;
-extern size_t  last_data_row;
+typedef struct {
+    Char*   buffer;
+    size_t  column;
+    size_t  row;
+    uint8_t color;
+    size_t  last_row;
+} Terminal;
 
 #define EMPTY_CHAR_CHAR ' '
-static inline Char empty_char(void)
-{
-    return (Char){ .character = EMPTY_CHAR_CHAR, .color = terminal_color };
-}
+
+void init_terminal (void);
+
+Terminal* terminal_get_state  (void);
+void terminal_update_row      (size_t row);
+void terminal_update_column   (size_t column);
+void terminal_update_last_row (size_t last_row);
+
+Char empty_char (void);
 
 void terminal_update_cursor_pos  (void);
 void terminal_scroll_up          (void);

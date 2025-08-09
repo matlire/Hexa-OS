@@ -11,7 +11,7 @@ IGNORE_DIRS=(
   gcc-cross-compiler
   docs
 )
-# extensions → human-readable labels
+
 declare -A types=(
   ["cfg"]="Config"
   ["c"]="C"
