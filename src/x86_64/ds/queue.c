@@ -34,7 +34,7 @@ int q_dequeue (Queue* q)
         return -1;
     }
     int value = q->items[q->front];
-    q->items[q->front] = 0; // Clear the slot
+    q->items[q->front] = 0;
     q->front = (q->front + 1) % QUEUE_MAX_SIZE;
     return value;
 }
@@ -50,7 +50,7 @@ int q_peek (Queue* q)
 void q_clear (Queue* q)
 {
     while (!q_isEmpty(q)) {
-        q->items[q->front] = 0; // Clear each slot
+        q->items[q->front] = 0;
         q->front = (q->front + 1) % QUEUE_MAX_SIZE;
     }
     q->front = 0;

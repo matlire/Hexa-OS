@@ -1,7 +1,7 @@
 Input: ""; Action: ""; Output/Error: ""; Comment: ""
 Bugs:
 1) Input: "hello world!"; Action: "ctrl+delete when cursor is after ' ' and before 'w'"; Output/Error: "hello !"; Comment: "if trying to input something, it replaces '!'"
-2) Fix home/end buttons to jump to start/end of line, not full input
+2) Fix home/end buttons to jump to start/end of line, not full input (maybe leave as no bug but feature?;> ) 
 
 Add comments, do docs!
 
