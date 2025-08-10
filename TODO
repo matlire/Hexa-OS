@@ -18,3 +18,8 @@ Minor tasks:
 2) docs
 
 Refactor:
+1) Small functions to inline ones (if needed)
+2) remove duplicate code in g_... updating
+3) eliminate anonymous enums
+4) Rename updaters to setters
+5) comments
