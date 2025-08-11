@@ -15,17 +15,17 @@ Terminal* terminal_get_state(void) {
     return &g_terminal;
 }
 
-void terminal_update_row (size_t row)
+void terminal_set_row (size_t row)
 {
     g_terminal.row = row;
 }
 
-void terminal_update_column (size_t column)
+void terminal_set_column (size_t column)
 {
     g_terminal.column = column;
 }
 
-void terminal_update_last_row (size_t last_row)
+void terminal_set_last_row (size_t last_row)
 {
     g_terminal.last_row = last_row;
 }
@@ -102,7 +102,7 @@ void terminal_scroll_up(void)
     }
 
     if (g_terminal.row > 0)    { g_terminal.row--; }
-    if (shell_get_state()->input_start_row > 0) { shell_update_input_start_row(shell_get_state()->input_start_row - 1);; }
+    if (shell_get_state()->input_start_row > 0) { shell_set_input_start_row(shell_get_state()->input_start_row - 1);; }
 }
 
 void terminal_write_new_line()

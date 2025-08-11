@@ -55,36 +55,42 @@ void input_clear_buffer (void)
         shell_update_input_buffer(i, '\0');
     }
     shell_get_state()->input_ptr       = 0;
-    shell_update_input_start_row(terminal_get_state()->row);
-    shell_update_input_start_col(terminal_get_state()->column);
+    shell_set_input_start_row(terminal_get_state()->row);
+    shell_set_input_start_col(terminal_get_state()->column);
     return;
 }
 
 
 void input_clear_last_char (void)
 {
-    if (shell_get_state()->input_ptr == 0) return;
-    shell_update_input_ptr(shell_get_state()->input_ptr - 1);
-    shell_update_input_buffer(shell_get_state()->input_ptr, '\0');
-    if (terminal_get_state()->column == 0)
+    uint8_t input_ptr = shell_get_state()->input_ptr;
+    if (input_ptr == 0) return;
+    input_ptr -= 1;
+    shell_set_input_ptr(input_ptr);
+    shell_update_input_buffer(input_ptr, '\0');
+    size_t row = terminal_get_state()->row;
+    size_t column = terminal_get_state()->column;
+    if (column == 0)
     {
-        if (terminal_get_state()->row == 0)
+        if (row == 0)
         {
             input_clear_buffer();
             return;
         }
-        terminal_update_row(terminal_get_state()->row - 1);
-        terminal_update_column(input_last_row_char(terminal_get_state()->row));
+        row -= 1;
+        terminal_set_row(row);
+        terminal_set_column(input_last_row_char(row));
     } else {
-        terminal_update_column(terminal_get_state()->column - 1);
+        column -= 1;
+        terminal_set_column(column);
     }
-    terminal_clear_char(terminal_get_state()->column, terminal_get_state()->row);
+    terminal_clear_char(column, row);
     return;
 }
 
 void update_input_last_data_row (void)
 {
-    terminal_update_last_row(shell_get_state()->input_start_row + count(shell_get_state()->input_buffer, '\n') + strlen(shell_get_state()->input_buffer) / VGA_WIDTH);
+    terminal_set_last_row(shell_get_state()->input_start_row + count(shell_get_state()->input_buffer, '\n') + strlen(shell_get_state()->input_buffer) / VGA_WIDTH);
     return;
 }
 
@@ -135,8 +141,8 @@ void input_redraw (void)
 {
     size_t saved_row = terminal_get_state()->row;
     size_t saved_col = terminal_get_state()->column;
-    terminal_update_row(shell_get_state()->input_start_row);
-    terminal_update_column(shell_get_state()->input_start_col);
+    terminal_set_row(shell_get_state()->input_start_row);
+    terminal_set_column(shell_get_state()->input_start_col);
     int i = 0;
     while (i < INPUT_BUF_SIZE-1)
     {
@@ -154,15 +160,15 @@ void input_redraw (void)
             {
                 terminal_write_char(EMPTY_CHAR_CHAR);
             }
-            terminal_update_column(0);
+            terminal_set_column(0);
             terminal_write_char('\n');
         } else if (shell_get_state()->input_buffer[i] != '\0') {
             terminal_write_char(shell_get_state()->input_buffer[i]);
         }
         i++;
     }
-    terminal_update_column(saved_col);
-    terminal_update_row(saved_row);
+    terminal_set_column(saved_col);
+    terminal_set_row(saved_row);
     terminal_update_cursor_pos();
 }
 
@@ -176,41 +182,42 @@ void input_print_char (uint8_t keycode)
     else if (g_keyboard_state.shift_holded)                            c = keymap[keycode].shifted;
     else                                                               c = keymap[keycode].normal;
 
-    if (shell_get_state()->input_ptr == INPUT_BUF_SIZE - 2)
+    uint8_t input_ptr = shell_get_state()->input_ptr;
+    if (input_ptr == INPUT_BUF_SIZE - 2)
     {
         return;
     }
 
     if (!shell_get_state()->insert_mode)
     {
-        shell_update_input_buffer(shell_get_state()->input_ptr, c);
-        shell_update_input_ptr(shell_get_state()->input_ptr + 1);
+        shell_update_input_buffer(input_ptr, c);
+        shell_set_input_ptr(input_ptr + 1);
         terminal_write_char(c);
         input_redraw();
     } else {
         int i = INPUT_BUF_SIZE-1;
-        while (i > shell_get_state()->input_ptr && shell_get_state()->input_buffer[shell_get_state()->input_ptr + 1] != '\0')
+        while (i > input_ptr && shell_get_state()->input_buffer[input_ptr + 1] != '\0')
         {
             shell_update_input_buffer(i, shell_get_state()->input_buffer[i-1]);
             i--;
         }
-        shell_update_input_buffer(shell_get_state()->input_ptr, c);
-        shell_update_input_ptr(shell_get_state()->input_ptr + 1);
+        shell_update_input_buffer(input_ptr, c);
+        shell_set_input_ptr(input_ptr + 1);
         i = 0;
         size_t saved_row = terminal_get_state()->row;
         size_t saved_col = terminal_get_state()->column;
-        terminal_update_column(shell_get_state()->input_start_col);
-        terminal_update_row(shell_get_state()->input_start_row);
+        terminal_set_column(shell_get_state()->input_start_col);
+        terminal_set_row(shell_get_state()->input_start_row);
         while (i < strlen(shell_get_state()->input_buffer))
         {
             terminal_write_char(shell_get_state()->input_buffer[i++]);
         }
         if (c != '\n')
         {
-            terminal_update_row(saved_row);
-            terminal_update_column(saved_col + 1);
+            terminal_set_row(saved_row);
+            terminal_set_column(saved_col + 1);
         } else {
-            terminal_update_column(0);
+            terminal_set_column(0);
             input_redraw();
         }
     }
@@ -225,27 +232,27 @@ Keyboard_State* keyboard_get_state (void)
     return &g_keyboard_state;
 }
 
-void keyboard_update_waiting_ext    (bool val)
+void keyboard_set_waiting_ext    (bool val)
 {
     g_keyboard_state.waiting_ext = val;
 }
 
-void keyboard_update_shift_holded   (bool val)
+void keyboard_set_shift_holded   (bool val)
 {
     g_keyboard_state.shift_holded = val;
 }
 
-void keyboard_update_ctrl_holded    (bool val)
+void keyboard_set_ctrl_holded    (bool val)
 {
     g_keyboard_state.ctrl_holded = val;
 }
 
-void keyboard_update_caps_active    (bool val)
+void keyboard_set_caps_active    (bool val)
 {
     g_keyboard_state.caps_active = val;
 }
 
-void keyboard_update_num_pad_active (bool val)
+void keyboard_set_num_pad_active (bool val)
 {
     g_keyboard_state.num_pad_active = val;
 }

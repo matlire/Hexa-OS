@@ -35,11 +35,12 @@ typedef struct {
 void init_keyboard_state (void);
 
 Keyboard_State* keyboard_get_state  (void);
-void keyboard_update_waiting_ext    (bool val);
-void keyboard_update_shift_holded   (bool val);
-void keyboard_update_ctrl_holded    (bool val);
-void keyboard_update_caps_active    (bool val);
-void keyboard_update_num_pad_active (bool val);
+
+void keyboard_set_waiting_ext    (bool val);
+void keyboard_set_shift_holded   (bool val);
+void keyboard_set_ctrl_holded    (bool val);
+void keyboard_set_caps_active    (bool val);
+void keyboard_set_num_pad_active (bool val);
 
 void   terminal_clear_char   	   (size_t col, size_t row);
 size_t input_last_row_char   	   (size_t row);

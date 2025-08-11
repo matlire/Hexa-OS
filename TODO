@@ -1,7 +1,6 @@
 Input: ""; Action: ""; Output/Error: ""; Comment: ""
 Bugs:
-1) Input: "hello world!"; Action: "ctrl+delete when cursor is after ' ' and before 'w'"; Output/Error: "hello !"; Comment: "if trying to input something, it replaces '!'"
-2) Fix home/end buttons to jump to start/end of line, not full input (maybe leave as no bug but feature?;> ) 
+1) Fix home/end buttons to jump to start/end of line, not full input (maybe leave as no bug but feature?;> ) 
 
 Add comments, do docs!
 
@@ -18,8 +17,4 @@ Minor tasks:
 2) docs
 
 Refactor:
-1) Small functions to inline ones (if needed)
-2) remove duplicate code in g_... updating
-3) eliminate anonymous enums
-4) Rename updaters to setters
-5) comments
+1) comments (!)

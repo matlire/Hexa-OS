@@ -41,7 +41,7 @@ void shell_run (void)
 void shell_execute (char *input)
 {
     g_shell_state.input_allowed = 0;
-    terminal_update_row(terminal_get_state()->last_row);
+    terminal_set_row(terminal_get_state()->last_row);
 	terminal_write_str("\n");
 	terminal_write_str(input);
 	terminal_write_str("\n");
@@ -62,7 +62,7 @@ void shell_handle_input (void)
 
         if (keycode == 0xE0)
         {
-            keyboard_update_waiting_ext(1);
+            keyboard_set_waiting_ext(1);
             return;
         }
         if (keyboard_get_state()->waiting_ext)
@@ -72,7 +72,7 @@ void shell_handle_input (void)
 
             input_ext_check_arrows(keycode, holded);
             check_ext_del(keycode, holded);
-            keyboard_update_waiting_ext(0);
+            keyboard_set_waiting_ext(0);
             return;
         }
 
@@ -116,27 +116,27 @@ void shell_update_input_buffer (uint8_t pos, char chr)
     g_shell_state.input_buffer[pos] = chr;
 }
 
-void shell_update_input_ptr (uint8_t val)
+void shell_set_input_ptr (uint8_t val)
 {
     g_shell_state.input_ptr = val;
 }
 
-void shell_update_input_allowed (bool val)
+void shell_set_input_allowed (bool val)
 {
     g_shell_state.input_allowed = val;
 }
 
-void shell_update_insert_mode (bool val)
+void shell_set_insert_mode (bool val)
 {
     g_shell_state.insert_mode = val;
 }
 
-void shell_update_input_start_col (size_t val)
+void shell_set_input_start_col (size_t val)
 {
     g_shell_state.input_start_col = val;
 }
 
-void shell_update_input_start_row (size_t val)
+void shell_set_input_start_row (size_t val)
 {
     g_shell_state.input_start_row = val;
 }

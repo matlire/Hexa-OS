@@ -64,9 +64,10 @@ typedef struct {
 void init_terminal (void);
 
 Terminal* terminal_get_state  (void);
-void terminal_update_row      (size_t row);
-void terminal_update_column   (size_t column);
-void terminal_update_last_row (size_t last_row);
+
+void terminal_set_row      (size_t row);
+void terminal_set_column   (size_t column);
+void terminal_set_last_row (size_t last_row);
 
 Char empty_char (void);
 

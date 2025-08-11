@@ -21,13 +21,13 @@ typedef struct {
 
 Shell_State* shell_get_state   (void);
 void shell_update_input_buffer (uint8_t pos, char chr);
-void shell_update_input_ptr    (uint8_t val);
+void shell_set_input_ptr       (uint8_t val);
 
-void shell_update_input_allowed (bool val);
-void shell_update_insert_mode   (bool val);
+void shell_set_input_allowed (bool val);
+void shell_set_insert_mode   (bool val);
 
-void shell_update_input_start_col (size_t val);
-void shell_update_input_start_row (size_t val);
+void shell_set_input_start_col (size_t val);
+void shell_set_input_start_row (size_t val);
 
 void shell_init    (void);
 void shell_run     (void);
