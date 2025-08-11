@@ -16,11 +16,11 @@ void idt_set_gate (uint8_t vector, void* isr, uint8_t flags)
 {
 	IDT_Entry_T* gate = &idt_entry[vector];
 
-	gate->isr_low     = (uint64_t)isr & 0xFFFF;
+	gate->isr_low     = (uint64_t) isr & 0xFFFF;
 	gate->kernel_cs   = 0x08;
 	gate->ist 	      = 0;
 	gate->attrs       = flags;
-	gate->isr_middle  = ((uint64_t)isr >> 16) & 0xFFFF; 
-	gate->isr_high    = ((uint64_t)isr >> 32) & 0xFFFFFFFF;
+	gate->isr_middle  = ((uint64_t) isr >> 16) & 0xFFFF; 
+	gate->isr_high    = ((uint64_t) isr >> 32) & 0xFFFFFFFF;
 	gate->reserved    = 0;
 }

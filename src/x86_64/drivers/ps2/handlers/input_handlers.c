@@ -1,12 +1,13 @@
 #include "input_handlers.h"
 
-bool input_check_num(uint8_t keycode, bool holded)
+bool input_check_num (uint8_t keycode, bool holded)
 {
 	if (keycode == KEY_NUMLOCK && holded == 1)
 	{
 		keyboard_set_num_pad_active(!keyboard_get_state()->num_pad_active);
 		return 1;
 	}
+
 	return 0;
 }
 
@@ -18,6 +19,7 @@ bool input_check_enter (uint8_t keycode, bool holded)
 		input_clear_buffer();
 		return 1;
 	}
+
 	return 0;
 }
 
@@ -48,7 +50,7 @@ bool input_check_backspace (uint8_t keycode, bool holded)
 				rem_n = 1;
 			}
 
-			while (i < INPUT_BUF_SIZE-1)
+			while (i < INPUT_BUF_SIZE - 1)
 			{
 				shell_update_input_buffer(i, shell_get_state()->input_buffer[i+1]);
 				i++;
@@ -76,6 +78,7 @@ bool input_check_backspace (uint8_t keycode, bool holded)
 		terminal_update_cursor_pos();
 		return 1;
 	}
+
 	return 0;
 }
 
@@ -86,6 +89,7 @@ bool input_check_caps (uint8_t keycode, bool holded)
 		keyboard_set_caps_active(keyboard_get_state()->caps_active);
 		return 1;
 	}
+
 	return 0;
 }
 
@@ -113,6 +117,7 @@ bool input_check_insert (uint8_t keycode, bool holded)
 		terminal_update_cursor_type(shell_get_state()->insert_mode);
 		return 1;
 	}
+
 	return 0;
 }
 
@@ -124,6 +129,7 @@ static bool is_word_sep(char c) {
 			return 1;
 		}
 	}
+
     return 0;
 }
 
@@ -168,6 +174,7 @@ static bool input_ext_check_left_arrow (uint8_t keycode, bool holded)
 	    terminal_update_cursor_pos();
 	    return 1;
 	}
+
 	return 0;
 }
 
@@ -222,8 +229,10 @@ static bool input_ext_check_right_arrow (uint8_t keycode, bool holded)
 	    terminal_set_column(column);
 	    terminal_set_row(row);
 	    terminal_update_cursor_pos();
+
 	    return 1;
 	}
+
 	return 0;
 }
 
@@ -263,8 +272,10 @@ static bool input_ext_check_up_arrow    (uint8_t keycode, bool holded)
 		terminal_set_row(row);
 		shell_set_input_ptr(input_ptr);
 		terminal_update_cursor_pos();
+
 		return 1;
 	}
+
 	return 0;
 }
 
@@ -302,8 +313,10 @@ static bool input_ext_check_down_arrow  (uint8_t keycode, bool holded)
 		terminal_set_row(row);
 		shell_set_input_ptr(input_ptr);
 		terminal_update_cursor_pos();
+
 		return 1;
 	}
+
 	return 0;
 }
 
@@ -312,6 +325,7 @@ bool input_ext_check_arrows (uint8_t keycode, bool holded)
 	if (input_ext_check_left_arrow(keycode, holded) || input_ext_check_right_arrow(keycode, holded) || input_ext_check_up_arrow(keycode, holded) || input_ext_check_down_arrow(keycode, holded)) {
 		return 1;
 	}
+
 	return 0;
 }
 
@@ -324,11 +338,11 @@ bool check_ext_del(uint8_t keycode, bool holded)
 		{
 			int i = shell_get_state()->input_ptr;
 			size_t last_input_row = terminal_get_state()->last_row;
-			if (shell_get_state()->input_buffer[i+1] == '\n')
+			if (shell_get_state()->input_buffer[i + 1] == '\n')
 			{
 				last_input_row--;
 			}
-			while (i < INPUT_BUF_SIZE-1)
+			while (i < INPUT_BUF_SIZE - 1)
 			{
 				shell_update_input_buffer(i, shell_get_state()->input_buffer[i+1]);
 				i++;
@@ -372,6 +386,7 @@ bool check_ext_del(uint8_t keycode, bool holded)
 		
 		return 1;
 	}
+
 	return 0;
 }
 
@@ -382,6 +397,7 @@ bool input_check_hend(uint8_t keycode, bool holded)
 	    terminal_set_column(shell_get_state()->input_start_col);
 	    shell_set_input_ptr(0);
 	    terminal_update_cursor_pos();
+
 	    return 1;
 	}
 	if (keycode == KEY_KP1 && holded && keyboard_get_state()->num_pad_active) {
@@ -390,6 +406,7 @@ bool input_check_hend(uint8_t keycode, bool holded)
 	    terminal_set_row(terminal_get_state()->last_row);
 	    terminal_set_column(input_last_row_char(terminal_get_state()->last_row));
 	    terminal_update_cursor_pos();
+	    
 	    return 1;
 	}
 	return 0;

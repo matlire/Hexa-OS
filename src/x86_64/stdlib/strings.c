@@ -16,9 +16,9 @@ void reverse (char *str)
 
 	while (start < end)
 	{
-		char buf = str[start];
+		char buf   = str[start];
 		str[start] = str[end];
-		str[end] = buf;
+		str[end]   = buf;
 		start++;
 		end--;
 	}
@@ -51,6 +51,7 @@ uint16_t count (const char *str, const char chr)
 void int2ascii (const int n, char *str)
 {
 	int ln = n;
+	
 	if (n == 0)
 	{
 		str[0] = '0';

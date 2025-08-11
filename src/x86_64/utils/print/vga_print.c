@@ -11,7 +11,7 @@ void init_terminal (void)
     g_terminal.last_row = 0;
 }
 
-Terminal* terminal_get_state(void) {
+Terminal* terminal_get_state (void) {
     return &g_terminal;
 }
 
@@ -37,7 +37,7 @@ Char empty_char(void)
 
 void terminal_update_cursor_pos (void)
 {
-    uint16_t pos = (uint16_t)(g_terminal.row * VGA_WIDTH + g_terminal.column);
+    uint16_t pos = (uint16_t) (g_terminal.row * VGA_WIDTH + g_terminal.column);
 
     outb(VGA_CRTC_INDEX, CURSOR_LOCATION_LOW);
     io_wait();
@@ -66,14 +66,14 @@ void terminal_update_cursor_type (bool insertm)
     io_wait();
 }
 
-void terminal_clear_row(size_t row)
+void terminal_clear_row (size_t row)
 {
     for (size_t i = 0; i < VGA_WIDTH; i++) {
         g_terminal.buffer[g_terminal.row * VGA_WIDTH + i] = empty_char();
     }
 }
 
-void terminal_clear(void)
+void terminal_clear (void)
 {
     for (size_t i = 0; i < VGA_HEIGHT; i++) {
         terminal_clear_row(i);
@@ -84,12 +84,12 @@ void terminal_clear(void)
     terminal_update_cursor_pos();
 }
 
-void terminal_set_color(uint8_t fg_color, uint8_t bg_color)
+void terminal_set_color (uint8_t fg_color, uint8_t bg_color)
 {
     g_terminal.color = fg_color | (bg_color << 4);
 }
 
-void terminal_scroll_up(void)
+void terminal_scroll_up (void)
 {
     for (size_t row = 1; row < VGA_HEIGHT; row++) {
         for (size_t col = 0; col < VGA_WIDTH; col++) {
@@ -105,19 +105,21 @@ void terminal_scroll_up(void)
     if (shell_get_state()->input_start_row > 0) { shell_set_input_start_row(shell_get_state()->input_start_row - 1);; }
 }
 
-void terminal_write_new_line()
+void terminal_write_new_line (void)
 {
-    g_terminal.column  = 0;
-    g_terminal.row    += 1;
+    g_terminal.column   = 0;
+    g_terminal.row     += 1;
+
     if (g_terminal.row >= VGA_HEIGHT) {
         terminal_scroll_up();
-        g_terminal.row = VGA_HEIGHT - 1;
+        g_terminal.row       = VGA_HEIGHT - 1;
         g_terminal.last_row -= 1;
     }
-    g_terminal.last_row += 1;
+    
+    g_terminal.last_row     += 1;
 }
 
-void terminal_write_char(char c)
+void terminal_write_char (char c)
 {
     if (c == '\n') {
         terminal_write_new_line();
@@ -134,13 +136,14 @@ void terminal_write_char(char c)
 
         g_terminal.buffer[g_terminal.row * VGA_WIDTH + g_terminal.column] = curr_char;
         g_terminal.column += 1;
+
         if (g_terminal.column >= VGA_WIDTH) {
             terminal_write_new_line();
         }
     }
 }
 
-void terminal_write_str(char* str)
+void terminal_write_str (char* str)
 {
     while (*str) {
         terminal_write_char(*str);

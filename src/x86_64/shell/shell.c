@@ -9,6 +9,7 @@ void shell_init (void)
     g_shell_state.input_start_col = 0;
     g_shell_state.input_start_row = 0;
     g_shell_state.input_ptr       = 0;
+
     for (int i = 0; i < INPUT_BUF_SIZE; i++)
     {
         g_shell_state.input_buffer[i] = '\0';
@@ -23,9 +24,11 @@ void shell_init (void)
     terminal_write_str("> ");
     terminal_update_cursor_type(g_shell_state.insert_mode);
     terminal_update_cursor_pos();
+
     g_shell_state.input_allowed   = 1;
     g_shell_state.input_start_col = terminal_get_state()->column;
     g_shell_state.input_start_row = terminal_get_state()->row;
+    
     return;
 }
 
@@ -41,15 +44,18 @@ void shell_run (void)
 void shell_execute (char *input)
 {
     g_shell_state.input_allowed = 0;
+
     terminal_set_row(terminal_get_state()->last_row);
 	terminal_write_str("\n");
 	terminal_write_str(input);
 	terminal_write_str("\n");
     terminal_write_str("> ");
+
     g_shell_state.input_allowed   = 1;
     g_shell_state.input_start_col = terminal_get_state()->column;
     g_shell_state.input_start_row = terminal_get_state()->row;
     terminal_update_cursor_pos();
+
 	return;
 }
 
@@ -76,7 +82,7 @@ void shell_handle_input (void)
             return;
         }
 
-        if (keycode > 2*KEYS_SIZE || keycode <= 0)
+        if (keycode > 2 * KEYS_SIZE || keycode <= 0)
         {
             return;
         }

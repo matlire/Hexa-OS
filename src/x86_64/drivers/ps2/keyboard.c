@@ -8,10 +8,12 @@ void init_keyboard_state (void)
     {
         g_keyboard_state.ascii_states[i] = KEY_UP;
     }
+
     for (int i = 0; i < EXT_SIZE; i++)
     {
         g_keyboard_state.ext_states[i] = KEY_UP;
     }
+    
     g_keyboard_state.waiting_ext    = 0; 
     g_keyboard_state.shift_holded   = 0;
     g_keyboard_state.ctrl_holded    = 0;
@@ -28,19 +30,21 @@ void queue_input (uint8_t keycode)
     }
 
     q_enqueue(&(g_keyboard_state.key_codes_queue), keycode);
+
     return;
 }
 
 void terminal_clear_char (size_t col, size_t row)
 {
     terminal_get_state()->buffer[row * VGA_WIDTH + col] = empty_char();
+    
     return;
 }
 
-size_t input_last_row_char(size_t row)
+size_t input_last_row_char (size_t row)
 {
     for (size_t i = VGA_WIDTH; i > 0; i--) {
-        if (terminal_get_state()->buffer[row * VGA_WIDTH + (i-1)].character != EMPTY_CHAR_CHAR) {
+        if (terminal_get_state()->buffer[row * VGA_WIDTH + (i - 1)].character != EMPTY_CHAR_CHAR) {
             return i;
         }
     }
@@ -54,9 +58,11 @@ void input_clear_buffer (void)
     {
         shell_update_input_buffer(i, '\0');
     }
-    shell_get_state()->input_ptr       = 0;
+
+    shell_get_state()->input_ptr = 0;
     shell_set_input_start_row(terminal_get_state()->row);
     shell_set_input_start_col(terminal_get_state()->column);
+    
     return;
 }
 
@@ -64,12 +70,15 @@ void input_clear_buffer (void)
 void input_clear_last_char (void)
 {
     uint8_t input_ptr = shell_get_state()->input_ptr;
+
     if (input_ptr == 0) return;
+    
     input_ptr -= 1;
     shell_set_input_ptr(input_ptr);
     shell_update_input_buffer(input_ptr, '\0');
     size_t row = terminal_get_state()->row;
     size_t column = terminal_get_state()->column;
+    
     if (column == 0)
     {
         if (row == 0)
@@ -84,7 +93,9 @@ void input_clear_last_char (void)
         column -= 1;
         terminal_set_column(column);
     }
+
     terminal_clear_char(column, row);
+    
     return;
 }
 
@@ -100,25 +111,29 @@ bool input_check_allowed ()
     {
         return 0;
     }
+
     return 1;
 }
 
 bool input_handle_keycode (uint8_t keycode, bool ext)
 {
     bool new_state;
+
     if (keycode >= KEYS_SIZE)
     {
-        keycode -= 128;
+        keycode  -= 128;
         new_state = 0;
     } else {
         new_state = 1;
     }
+
     if (ext)
     {
         g_keyboard_state.ext_states[keycode] = new_state;
     } else {
         g_keyboard_state.ascii_states[keycode] = new_state;
     }
+    
     return new_state;
 }
 
@@ -134,6 +149,7 @@ bool input_check_printable (uint8_t keycode, bool holded)
             return 0;
         }
     }
+
     return 1;
 }
 
@@ -143,6 +159,7 @@ void input_redraw (void)
     size_t saved_col = terminal_get_state()->column;
     terminal_set_row(shell_get_state()->input_start_row);
     terminal_set_column(shell_get_state()->input_start_col);
+
     int i = 0;
     while (i < INPUT_BUF_SIZE-1)
     {
@@ -167,6 +184,7 @@ void input_redraw (void)
         }
         i++;
     }
+
     terminal_set_column(saved_col);
     terminal_set_row(saved_row);
     terminal_update_cursor_pos();
@@ -198,7 +216,7 @@ void input_print_char (uint8_t keycode)
         int i = INPUT_BUF_SIZE-1;
         while (i > input_ptr && shell_get_state()->input_buffer[input_ptr + 1] != '\0')
         {
-            shell_update_input_buffer(i, shell_get_state()->input_buffer[i-1]);
+            shell_update_input_buffer(i, shell_get_state()->input_buffer[i - 1]);
             i--;
         }
         shell_update_input_buffer(input_ptr, c);
@@ -221,8 +239,10 @@ void input_print_char (uint8_t keycode)
             input_redraw();
         }
     }
+    
     update_input_last_data_row();
     terminal_update_cursor_pos();
+
     return;
 }
 

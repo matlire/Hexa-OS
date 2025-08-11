@@ -6,8 +6,13 @@ Add comments, do docs!
 
 Major tasks:
 1) Parse commands
-2) Timer & clock
-3) memory management (malloc, free, etc)
+2) IRQ0
+3) memory management, heap (malloc, free, etc)
+4) process control block
+5) scheduler
+6) user mode
+7) syscalls
+Filesystem
 ...
 
 Minor tasks:
