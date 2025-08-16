@@ -1,5 +1,17 @@
 #include "input_handlers.h"
 
+static bool is_word_sep(char c) {
+	for (uint8_t i = 0; i < CTRL_SIZE; i++)
+	{
+		if (c == ctrl_break[i])
+		{
+			return 1;
+		}
+	}
+
+    return 0;
+}
+
 bool input_check_num (uint8_t keycode, bool holded)
 {
 	if (keycode == KEY_NUMLOCK && holded == 1)
@@ -119,18 +131,6 @@ bool input_check_insert (uint8_t keycode, bool holded)
 	}
 
 	return 0;
-}
-
-static bool is_word_sep(char c) {
-	for (uint8_t i = 0; i < CTRL_SIZE; i++)
-	{
-		if (c == ctrl_break[i])
-		{
-			return 1;
-		}
-	}
-
-    return 0;
 }
 
 static bool input_ext_check_left_arrow (uint8_t keycode, bool holded)

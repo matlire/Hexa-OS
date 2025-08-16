@@ -1,6 +1,6 @@
 #include "shell.h"
 
-static Shell_State g_shell_state;
+static Shell_State_T g_shell_state;
 
 void shell_init (void)
 {
@@ -47,7 +47,29 @@ void shell_execute (char *input)
 
     terminal_set_row(terminal_get_state()->last_row);
 	terminal_write_str("\n");
-	terminal_write_str(input);
+	
+    Command_Token_T *tokens[MAX_TOKENS];
+    int argc = commands_tokenize(input, (Command_Token_T **)tokens);
+    bool found = 0;
+    if (argc != 0)
+    {
+        const Command_Function_T *cmd = __start_shell_commands;
+        while (cmd < __stop_shell_commands && !found)
+        {
+            if (strcmp(tokens[0]->value, cmd->name) == 0)
+            {
+                cmd->func(argc, tokens);
+                found = 1;
+                break;
+            }
+            cmd++;
+        }
+        if (!found)
+        {
+            terminal_write_str("Command not found.");
+        }
+    } 
+
 	terminal_write_str("\n");
     terminal_write_str("> ");
 
@@ -112,7 +134,7 @@ void shell_handle_input (void)
     return;
 }
 
-Shell_State* shell_get_state (void)
+Shell_State_T* shell_get_state (void)
 {
     return &g_shell_state;
 }

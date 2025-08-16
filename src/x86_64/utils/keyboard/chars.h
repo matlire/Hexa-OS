@@ -14,17 +14,17 @@ typedef struct {
     char shifted;
     char caps;
     char shifted_caps;
-} Key_Map_Entry;
+} Key_Map_Entry_T;
 
-extern const Key_Map_Entry keymap[KEYS_SIZE];
+extern const Key_Map_Entry_T keymap[KEYS_SIZE];
 
 typedef struct {
     const char* name;
     char normal;
     char numlock;
-} Ext_Key_Map_Entry;
+} Ext_Key_Map_Entry_T;
 
-extern const Ext_Key_Map_Entry ext_keymap[EXT_SIZE];
+extern const Ext_Key_Map_Entry_T ext_keymap[EXT_SIZE];
 
 extern const char* not_printable[NPRT_SIZE];
 extern const char  ctrl_break[CTRL_SIZE];

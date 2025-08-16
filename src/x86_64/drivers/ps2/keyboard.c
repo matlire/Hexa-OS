@@ -1,6 +1,6 @@
 #include "keyboard.h"
 
-static Keyboard_State g_keyboard_state;
+static Keyboard_State_T g_keyboard_state;
 
 void init_keyboard_state (void)
 {
@@ -214,7 +214,7 @@ void input_print_char (uint8_t keycode)
         input_redraw();
     } else {
         int i = INPUT_BUF_SIZE-1;
-        while (i > input_ptr && shell_get_state()->input_buffer[input_ptr + 1] != '\0')
+        while (i > input_ptr && shell_get_state()->input_buffer[input_ptr] != '\0')
         {
             shell_update_input_buffer(i, shell_get_state()->input_buffer[i - 1]);
             i--;
@@ -247,7 +247,7 @@ void input_print_char (uint8_t keycode)
 }
 
 
-Keyboard_State* keyboard_get_state (void)
+Keyboard_State_T* keyboard_get_state (void)
 {
     return &g_keyboard_state;
 }

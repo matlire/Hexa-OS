@@ -89,10 +89,10 @@ typedef struct
 	uint64_t r15, r14, r13, r12, r11, r10, r9, r8, rdi, rsi, rbp, rdx, rcx, rbx, rax;
    	uint64_t int_no, err_code;
    	uint64_t eip, cs, eflags, useresp, ss;
-} __attribute__((packed)) registers_t;
+} __attribute__((packed)) Registers_T;
 
 void isr_install (void);
 
-void interrupt_handler (registers_t *registers);
+void interrupt_handler (Registers_T *registers);
 
 #endif

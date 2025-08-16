@@ -17,11 +17,18 @@ SECTIONS
     .rodata BLOCK(4K) : ALIGN(4K)
     {
         *(.rodata)
-    }
+    } 
 
     .data BLOCK(4K) : ALIGN(4K)
     {
         *(.data)
+    }
+
+    .shell_commands BLOCK(4K) : ALIGN(4K)
+    {
+        __start_shell_commands = .;
+        KEEP(*( .shell_commands ))
+        __stop_shell_commands = .;
     }
 
     .bss BLOCK(4K) : ALIGN(4K)

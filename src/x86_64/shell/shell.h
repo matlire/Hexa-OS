@@ -5,6 +5,7 @@
 #include "strings.h"
 #include "input_handlers.h"
 #include "queue.h"
+#include "commands.h"
 
 #define INPUT_BUF_SIZE 256
 
@@ -17,9 +18,9 @@ typedef struct {
 
     uint8_t input_ptr;
     char    input_buffer[INPUT_BUF_SIZE];
-} Shell_State;
+} Shell_State_T;
 
-Shell_State* shell_get_state   (void);
+Shell_State_T* shell_get_state   (void);
 void shell_update_input_buffer (uint8_t pos, char chr);
 void shell_set_input_ptr       (uint8_t val);
 

@@ -24,12 +24,27 @@ void reverse (char *str)
 	}
 }
 
-short int strcmp (const char *str1, const char *str2)
+int strcmp (const char *str1, const char *str2)
 {
 	while (*str1 && (*str1 == *str2)) {
         str1++;
         str2++;
     }
+    return *(const unsigned char *)str1 - *(const unsigned char *)str2;
+}
+
+int strncmp (const char *str1, const char *str2, short int n)
+{
+    while (n > 0 && *str1 && (*str1 == *str2)) {
+        str1++;
+        str2++;
+        n--;
+    }
+
+    if (n == 0) {
+        return 0;
+    }
+
     return *(const unsigned char *)str1 - *(const unsigned char *)str2;
 }
 
@@ -46,6 +61,25 @@ uint16_t count (const char *str, const char chr)
 	}
 
 	return res;
+}
+
+char *strchr (const char *str, int c)
+{
+    while (*str)
+    {
+        if (*str == (char)c)
+        {
+            return (char *)str;
+        }
+        str++;
+    }
+
+    if (c == '\0')
+    {
+        return (char *) str;
+    }
+
+    return 0;
 }
 
 void int2ascii (const int n, char *str)

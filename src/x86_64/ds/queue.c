@@ -1,6 +1,6 @@
 #include "queue.h"
 
-void q_initialize (Queue* q)
+void q_initialize (Queue_T* q)
 {
     q->front = 0;
     q->rear = 0;
@@ -10,17 +10,17 @@ void q_initialize (Queue* q)
     }
 }
 
-bool q_isEmpty (Queue* q)
+bool q_isEmpty (Queue_T* q)
 {
     return (q->front == q->rear);
 }
 
-bool q_isFull (Queue* q)
+bool q_isFull (Queue_T* q)
 {
     return ((q->rear + 1) % QUEUE_MAX_SIZE == q->front);
 }
 
-int q_enqueue (Queue* q, int value)
+int q_enqueue (Queue_T* q, int value)
 {
     if (q_isFull(q)) {
         return -1;
@@ -32,7 +32,7 @@ int q_enqueue (Queue* q, int value)
     return value;
 }
 
-int q_dequeue (Queue* q)
+int q_dequeue (Queue_T* q)
 {
     if (q_isEmpty(q)) {
         return -1;
@@ -45,7 +45,7 @@ int q_dequeue (Queue* q)
     return value;
 }
 
-int q_peek (Queue* q)
+int q_peek (Queue_T* q)
 {
     if (q_isEmpty(q)) {
         return -1;
@@ -54,7 +54,7 @@ int q_peek (Queue* q)
     return q->items[q->front];
 }
 
-void q_clear (Queue* q)
+void q_clear (Queue_T* q)
 {
     while (!q_isEmpty(q)) {
         q->items[q->front] = 0;

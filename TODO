@@ -1,17 +1,16 @@
 Input: ""; Action: ""; Output/Error: ""; Comment: ""
 Bugs:
-1) Fix home/end buttons to jump to start/end of line, not full input (maybe leave as no bug but feature?;> ) 
+1) Fix home/end buttons to jump to start/end of line, not full input (maybe leave as no bug but feature?;> )
 
 Add comments, do docs!
 
 Major tasks:
-1) Parse commands
-2) IRQ0
-3) memory management, heap (malloc, free, etc)
-4) process control block
-5) scheduler
-6) user mode
-7) syscalls
+1) IRQ0
+2) memory management, heap (malloc, free, etc)
+3) process control block
+4) scheduler
+5) user mode
+6) syscalls
 Filesystem
 ...
 And much more;)

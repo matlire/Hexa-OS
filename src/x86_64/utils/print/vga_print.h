@@ -49,27 +49,27 @@ typedef enum {
 typedef struct {
     uint8_t character;
     uint8_t color;
-} Char;
+} Char_T;
 
 typedef struct {
-    Char*   buffer;
+    Char_T*   buffer;
     size_t  column;
     size_t  row;
     uint8_t color;
     size_t  last_row;
-} Terminal;
+} Terminal_T;
 
 #define EMPTY_CHAR_CHAR ' '
 
 void init_terminal (void);
 
-Terminal* terminal_get_state  (void);
+Terminal_T* terminal_get_state  (void);
 
 void terminal_set_row      (size_t row);
 void terminal_set_column   (size_t column);
 void terminal_set_last_row (size_t last_row);
 
-Char empty_char (void);
+Char_T empty_char (void);
 
 void terminal_update_cursor_pos  (void);
 void terminal_scroll_up          (void);

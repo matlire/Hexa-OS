@@ -68,7 +68,7 @@ char *exception_messages[] = {
     "Reserved"
 };
 
-void interrupt_handler (registers_t *registers)
+void interrupt_handler (Registers_T *registers)
 {
     uint8_t vec = (uint8_t)registers->int_no;
 

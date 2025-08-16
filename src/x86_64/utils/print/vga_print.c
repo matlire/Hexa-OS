@@ -1,17 +1,17 @@
 #include "vga_print.h"
 
-static Terminal g_terminal;
+static Terminal_T g_terminal;
 
 void init_terminal (void)
 {
-    g_terminal.buffer   = (Char*) 0xB8000;
+    g_terminal.buffer   = (Char_T*) 0xB8000;
     g_terminal.column   = 0;
     g_terminal.row      = 0;
     g_terminal.color    = COLOR_WHITE | (COLOR_BLACK << 4);
     g_terminal.last_row = 0;
 }
 
-Terminal* terminal_get_state (void) {
+Terminal_T* terminal_get_state (void) {
     return &g_terminal;
 }
 
@@ -30,9 +30,9 @@ void terminal_set_last_row (size_t last_row)
     g_terminal.last_row = last_row;
 }
 
-Char empty_char(void)
+Char_T empty_char(void)
 {
-    return (Char){ .character = EMPTY_CHAR_CHAR, .color = g_terminal.color };
+    return (Char_T){ .character = EMPTY_CHAR_CHAR, .color = g_terminal.color };
 }
 
 void terminal_update_cursor_pos (void)
@@ -128,7 +128,7 @@ void terminal_write_char (char c)
         {
             c = EMPTY_CHAR_CHAR;
         }
-        Char curr_char = (Char) 
+        Char_T curr_char = (Char_T) 
         {
             character: c,
             color: g_terminal.color

@@ -52,7 +52,7 @@ const char ctrl_break[] = {
     ','
 };
 
-const Key_Map_Entry keymap[KEYS_SIZE] = {
+const Key_Map_Entry_T keymap[KEYS_SIZE] = {
     [0x00] = {"ERROR",       '?',  '?',  '?',  '?' },
     [0x01] = {"Esc",         '?',  '?',  '?',  '?'  },
     [0x02] = {"1",           '1',  '!',  '1',  '!' },
@@ -144,7 +144,7 @@ const Key_Map_Entry keymap[KEYS_SIZE] = {
     [0x59 ... 0x7F] = {"UNKNOWN", '?', '?', '?', '?'}
 };
 
-const Ext_Key_Map_Entry ext_keymap[EXT_SIZE] = {
+const Ext_Key_Map_Entry_T ext_keymap[EXT_SIZE] = {
     [0x00] = { "ERROR",        '?',  '?' },
     [0x52] = { "Insert",       '?',  '0' },
     [0x53] = { "Delete",       '?',  '.' },

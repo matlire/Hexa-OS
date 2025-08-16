@@ -18,7 +18,7 @@ static enum {
 };
 
 typedef struct {
-	Queue key_codes_queue;
+	Queue_T key_codes_queue;
 
 	uint8_t ascii_states[KEYS_SIZE];
 	uint8_t   ext_states[EXT_SIZE];
@@ -30,11 +30,11 @@ typedef struct {
 
 	bool caps_active;
 	bool num_pad_active;
-} Keyboard_State;
+} Keyboard_State_T;
 
 void init_keyboard_state (void);
 
-Keyboard_State* keyboard_get_state  (void);
+Keyboard_State_T* keyboard_get_state  (void);
 
 void keyboard_set_waiting_ext    (bool val);
 void keyboard_set_shift_holded   (bool val);
