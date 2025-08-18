@@ -33,6 +33,13 @@ extern const Command_Function_T __stop_shell_commands[];
 
 int commands_tokenize    (char *input, Command_Token_T *tokens[]);
 
+inline static bool is_separator (const char *chr);
+
+static char *parse_quoted_value   (char *p, const char **out);
+static char *parse_unquoted_value (char *p, const char **out);
+static char *parse_flag           (char *p, Command_Token_T *token);
+static char *parse_text           (char *p, Command_Token_T *token);
+
 #define SHELL_COMMAND(name_str, description_str, func_ptr) \
     __attribute__((used, section(".shell_commands"), aligned(sizeof(void*)))) \
     static const Command_Function_T __shell_command##func_ptr = { name_str, description_str, func_ptr };

@@ -3,9 +3,9 @@
 
 static int cmd_info (int argc, Command_Token_T **argv)
 {
-    terminal_write_str("System Info:\n");
-    terminal_write_str("  Arch: x86-64\n");
-    terminal_write_str("  Kernel: Hexa OS kernel");
+    kprint("System Info:\n");
+    kprint("  Arch: x86-64\n");
+    kprint("  Kernel: Hexa OS kernel");
     return 0;
 }
 

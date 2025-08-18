@@ -78,7 +78,8 @@ void terminal_update_cursor_type (bool insertm);
 void terminal_clear_row       (size_t row);
 void terminal_clear           (void);
 void terminal_set_color       (uint8_t fg_color, uint8_t bg_color);
-void terminal_write_char      (char c);
-void terminal_write_str       (char* str);
+
+void kputchar (char c);
+void kprint   (char* str);
 
 #endif

@@ -1,12 +1,15 @@
 #ifndef ISR_H
 #define ISR_H
 
+#include <stdint.h>
+
 #include "idt.h"
 #include "ports.h"
 #include "vga_print.h"
 #include "pic.h"
 #include "strings.h"
 #include "keyboard.h"
+#include "time_core.h"
 
 extern void handle_input(uint8_t keycode);
 

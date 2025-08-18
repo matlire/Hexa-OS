@@ -9,20 +9,22 @@ all_object_files         := \
     $(x86_64_asm_object_files)
 
 GCC_FLAGS   := -ffreestanding -fno-stack-protector -fno-builtin -O2 -mno-red-zone -mno-sse -mno-mmx -m64 -Wall -Wextra \
-               -I src/x86_64        \
-               -I src/x86_64/utils  \
-               -I src/x86_64/ds  \
-			   -I src/x86_64/utils/print  \
-			   -I src/x86_64/utils/keyboard  \
-               -I src/x86_64/kernel \
-               -I src/x86_64/interrupts \
-               -I src/x86_64/drivers/ports \
-               -I src/x86_64/drivers/ps2/handlers \
-               -I src/x86_64/drivers/ps2 \
-               -I src/x86_64/PIC \
-               -I src/x86_64/stdlib \
-               -I src/x86_64/shell \
-			   -I src/x85_64/shell/commands \
+				-I src/x86_64        \
+                -I src/x86_64/utils  \
+                -I src/x86_64/ds  \
+			    -I src/x86_64/utils/print  \
+			    -I src/x86_64/utils/keyboard  \
+				-I src/x86_64/kernel \
+                -I src/x86_64/interrupts \
+                -I src/x86_64/drivers/ports \
+                -I src/x86_64/drivers/ps2/handlers \
+                -I src/x86_64/drivers/ps2 \
+				-I src/x86_64/kernel/time \
+			    -I src/x86_64/drivers/timer \
+			    -I src/x86_64/PIC \
+                -I src/x86_64/stdlib \
+                -I src/x86_64/shell \
+			    -I src/x85_64/shell/commands \
 
 NASM_FLAGS  := -f elf64
 

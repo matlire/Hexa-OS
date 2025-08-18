@@ -6,6 +6,7 @@
 #include "input_handlers.h"
 #include "queue.h"
 #include "commands.h"
+#include "time_core.h"
 
 #define INPUT_BUF_SIZE 256
 

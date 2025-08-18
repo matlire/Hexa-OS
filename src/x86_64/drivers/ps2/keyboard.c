@@ -165,7 +165,7 @@ void input_redraw (void)
     {
         if (shell_get_state()->input_buffer[i] == '\0')
         {
-            terminal_write_char(EMPTY_CHAR_CHAR);
+            kputchar(EMPTY_CHAR_CHAR);
             if (terminal_get_state()->row == terminal_get_state()->last_row + 1 || (terminal_get_state()->row == VGA_HEIGHT - 1 && terminal_get_state()->column == VGA_WIDTH - 1))
             {
                 break;
@@ -175,12 +175,12 @@ void input_redraw (void)
         {
             for (size_t j = terminal_get_state()->column + 1; j < VGA_WIDTH; j++)
             {
-                terminal_write_char(EMPTY_CHAR_CHAR);
+                kputchar(EMPTY_CHAR_CHAR);
             }
             terminal_set_column(0);
-            terminal_write_char('\n');
+            kputchar('\n');
         } else if (shell_get_state()->input_buffer[i] != '\0') {
-            terminal_write_char(shell_get_state()->input_buffer[i]);
+            kputchar(shell_get_state()->input_buffer[i]);
         }
         i++;
     }
@@ -210,7 +210,7 @@ void input_print_char (uint8_t keycode)
     {
         shell_update_input_buffer(input_ptr, c);
         shell_set_input_ptr(input_ptr + 1);
-        terminal_write_char(c);
+        kputchar(c);
         input_redraw();
     } else {
         int i = INPUT_BUF_SIZE-1;
@@ -228,7 +228,7 @@ void input_print_char (uint8_t keycode)
         terminal_set_row(shell_get_state()->input_start_row);
         while (i < strlen(shell_get_state()->input_buffer))
         {
-            terminal_write_char(shell_get_state()->input_buffer[i++]);
+            kputchar(shell_get_state()->input_buffer[i++]);
         }
         if (c != '\n')
         {

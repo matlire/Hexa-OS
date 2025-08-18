@@ -1,6 +1,7 @@
 #include "input_handlers.h"
 
-static bool is_word_sep(char c) {
+static bool is_word_sep(char c)
+{
 	for (uint8_t i = 0; i < CTRL_SIZE; i++)
 	{
 		if (c == ctrl_break[i])

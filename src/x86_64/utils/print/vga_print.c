@@ -119,7 +119,7 @@ void terminal_write_new_line (void)
     g_terminal.last_row     += 1;
 }
 
-void terminal_write_char (char c)
+void kputchar (char c)
 {
     if (c == '\n') {
         terminal_write_new_line();
@@ -143,10 +143,10 @@ void terminal_write_char (char c)
     }
 }
 
-void terminal_write_str (char* str)
+void kprint (char* str)
 {
     while (*str) {
-        terminal_write_char(*str);
+        kputchar(*str);
         str++;
     }
 }

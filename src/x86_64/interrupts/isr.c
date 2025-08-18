@@ -21,7 +21,10 @@ void isr_install (void) {
     
     PIC_enable();
     PIC_remap(IRQ0, IRQ0 + 8);
-    IRQ_clear_mask(1);
+    for (uint8_t i = 0; i < 2; i++)
+    {
+        IRQ_clear_mask(i);
+    }
 
     for (int i = 0; i < 16; i++) {
         idt_set_gate((uint8_t)(IRQ0 + i), (void*)irq_routines[i], ISR_FLAGS);
@@ -71,24 +74,26 @@ char *exception_messages[] = {
 void interrupt_handler (Registers_T *registers)
 {
     uint8_t vec = (uint8_t)registers->int_no;
-
+    
     // CPU interrupts
     if (vec < 32)
     {
-        terminal_write_str("Got isr interrupt (");
+        kprint("Got isr interrupt (");
         char buffer[12];
         int2ascii(vec, buffer);
-        terminal_write_str(buffer);
-        terminal_write_str("): ");
-        terminal_write_str(exception_messages[vec]);
-        terminal_write_str("\n");
+        kprint(buffer);
+        kprint("): ");
+        kprint(exception_messages[vec]);
+        kprint("\n");
     }
     // IRQ interrupts
     else if (vec > 31 && vec < 48)
     {
         uint8_t irq = vec - IRQ0;
-
-        if (irq == 1) {
+        
+        if (irq == 0) {
+            time_core_irq();
+        } else if (irq == 1) {
             uint8_t sc = inb(0x60);
             queue_input(sc);
         }
@@ -98,6 +103,6 @@ void interrupt_handler (Registers_T *registers)
     // Others
     else
     {
-        terminal_write_str("Got interrupt: not implemented!");
+        kprint("Got interrupt: not implemented!");
     }
 }

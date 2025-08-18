@@ -5,12 +5,15 @@ Bugs:
 Add comments, do docs!
 
 Major tasks:
-1) IRQ0
-2) memory management, heap (malloc, free, etc)
-3) process control block
-4) scheduler
-5) user mode
-6) syscalls
+1) PIT
+2) RTC
+3) memory management, heap (malloc, free, etc)
+4) APIC
+5) HPET
+6) process control block
+7) scheduler
+8) user mode
+9) syscalls
 Filesystem
 ...
 And much more;)
@@ -20,6 +23,7 @@ Minor tasks:
 	- numpad
 	- F1-F12 buttons
 2) docs
+3) Add commands: shutdown, restart
 
 Refactor:
 1) comments (!)

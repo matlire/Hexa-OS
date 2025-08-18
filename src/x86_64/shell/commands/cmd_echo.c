@@ -17,15 +17,15 @@ static int cmd_echo (int argc, Command_Token_T **argv)
 
     if (help)
     {
-        terminal_write_str("Usage: echo [--text=\"...\"] [args...]\n");
-        terminal_write_str("  --help        Show this help message\n");
-        terminal_write_str("  --text=\"...\"  Print the given text"); 
+        kprint("Usage: echo [--text=\"...\"] [args...]\n");
+        kprint("  --help        Show this help message\n");
+        kprint("  --text=\"...\"  Print the given text"); 
         return 0;
     }
 
     if (text)
     {
-        terminal_write_str(text);
+        kprint(text);
         return 0;
     }
 
@@ -33,8 +33,8 @@ static int cmd_echo (int argc, Command_Token_T **argv)
     {
         Command_Token_T *token = argv[i];
         if (token->type != TOKEN_NORMAL) continue;
-        terminal_write_str(token->value);
-        terminal_write_str(" ");
+        kprint(token->value);
+        kprint(" ");
     }
     
     return 0;

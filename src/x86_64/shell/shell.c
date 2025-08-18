@@ -17,11 +17,11 @@ void shell_init (void)
 
 	terminal_clear();
     terminal_set_color(COLOR_YELLOW, COLOR_BLACK);
-    terminal_write_str("> Welcome to Hexa OS!\n");
-    terminal_write_str("> Write help to get started\n");
+    kprint("> Welcome to Hexa OS!\n");
+    kprint("> Write help to get started\n");
     terminal_set_color(COLOR_WHITE, COLOR_BLACK);
-    terminal_write_str("\n");
-    terminal_write_str("> ");
+    kprint("\n");
+    kprint("> ");
     terminal_update_cursor_type(g_shell_state.insert_mode);
     terminal_update_cursor_pos();
 
@@ -46,7 +46,7 @@ void shell_execute (char *input)
     g_shell_state.input_allowed = 0;
 
     terminal_set_row(terminal_get_state()->last_row);
-	terminal_write_str("\n");
+	kprint("\n");
 	
     Command_Token_T *tokens[MAX_TOKENS];
     int argc = commands_tokenize(input, (Command_Token_T **)tokens);
@@ -66,12 +66,12 @@ void shell_execute (char *input)
         }
         if (!found)
         {
-            terminal_write_str("Command not found.");
+            kprint("Command not found.");
         }
     } 
 
-	terminal_write_str("\n");
-    terminal_write_str("> ");
+	kprint("\n");
+    kprint("> ");
 
     g_shell_state.input_allowed   = 1;
     g_shell_state.input_start_col = terminal_get_state()->column;
