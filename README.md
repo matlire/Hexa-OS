@@ -1,7 +1,7 @@
 # Hexa OS
 
 
-Hexa OS - is a from-scratch project of os.
+Hexa OS - is an educational from-scratch project of os.
 
 
 To build:
